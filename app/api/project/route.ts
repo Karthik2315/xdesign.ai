@@ -1,3 +1,4 @@
+import { generateProjectName } from "@/app/action/action";
 import prisma from "@/lib/prisma";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { NextRequest, NextResponse } from "next/server";
@@ -11,10 +12,13 @@ export const POST = async(req:NextRequest) => {
     if(!user) throw new Error("unAuthorized");
     if(!prompt) throw new Error("Missing Prompt")
     const userId = user.id;
+
+    const projectName = await generateProjectName(prompt);
     const project = await prisma.project.create({
       data : {
         userId,
-        name : ""
+        name : projectName || "",
+
       }
     })
 
