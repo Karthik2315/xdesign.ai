@@ -18,5 +18,6 @@ export const generateProjectName = async(prompt:string) => {
     return text?.trim() || "Untitled";
   } catch (error) {
     console.log(error)
+    return "untitled";
   }
 }
