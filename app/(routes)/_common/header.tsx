@@ -1,8 +1,10 @@
 import Logo from '@/components/logo';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import { LoginLink, useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
-import { MoonIcon, SunIcon } from 'lucide-react';
+import { LoginLink, LogoutLink, useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
+import { LogOutIcon, MoonIcon, SunIcon } from 'lucide-react';
 import { useTheme } from 'next-themes'
 import Link from 'next/link';
 import React from 'react'
@@ -22,8 +24,30 @@ const Header = () => {
               <MoonIcon  className={cn("absolute size-5 transition",!isDark ? "scale-100" : "scale-0")}/>
             </Button>
             {user ? (
-              <>
-              </>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Avatar className="h-8 w-8 shrink-0 rounded-full">
+                    <AvatarImage
+                      src={user?.picture || ""}
+                      alt={user?.given_name || ""}
+                    />
+                    <AvatarFallback className="rounded-lg">
+                      {user?.given_name?.charAt(0)}
+                      {user?.family_name?.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className='mt-2.5'>
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <LogoutLink className='w-full flex items-center gap-2'>
+                      <LogOutIcon className='size-4' />
+                      Logout
+                    </LogoutLink>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
                 ) : (
                   <LoginLink className='bg-primary px-2 rounded-md text-foreground py-1'>Sign In</LoginLink>
             )}
