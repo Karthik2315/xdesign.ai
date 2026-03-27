@@ -3,6 +3,7 @@ import { Jost } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
+import { QueryProvider } from "@/context/query-provider";
 
 
 const jostSans = Jost({
@@ -22,9 +23,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${jostSans.className} antialiased`}
-      >
+      <body className={`${jostSans.className} antialiased`}>
+        <QueryProvider>
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
@@ -32,7 +32,9 @@ export default function RootLayout({
           >
             {children}
             <Toaster richColors position="bottom-center" />
-          </ThemeProvider>      </body>
+          </ThemeProvider>
+        </QueryProvider>
+      </body>
     </html>
   );
 }
