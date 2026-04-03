@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { toast } from "sonner";
 
 export const useCreateProject = ()=>{
   const router = useRouter();
@@ -12,8 +13,9 @@ export const useCreateProject = ()=>{
     onSuccess:(data) => {
       router.push(`/project/${data.data.id}`)
     },
-    onError:()=>{
-      
+    onError:(error)=>{
+      console.error("Error creating project",error);
+      toast.error("Failed to create project. Please try again.")
     }
   })
 }

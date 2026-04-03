@@ -3,6 +3,7 @@ import { Suggestion, Suggestions } from '@/components/ai-elements/suggestion';
 import PromptInput from '@/components/prompt-input';
 import React, { useState } from 'react'
 import Header from './header';
+import { useCreateProject } from '@/features/use-project';
 
 const LandingSection = () => {
   const [promptText,setPromptText] = useState<string>("");
@@ -38,6 +39,7 @@ const LandingSection = () => {
     value: `Food delivery home feed. Top search bar with location pin. Horizontal scrolling hero carousel of daily deals. Vertical list of restaurants with large delicious food thumbnails, delivery time badges, and rating stars. Floating Action Button (FAB) for cart. Mobile app, single screen. Style: Vibrant and Appetizing. Warm colors (orange, 🔴red, 🟡yellow), rounded card corners, subtle drop shadows to create depth. Friendly and inviting UI.`,
   }
   ]
+  const {mutate,isPending} = useCreateProject();
   const handleSuggestionClick = (val:string)=>{
     setPromptText(val);
   }
